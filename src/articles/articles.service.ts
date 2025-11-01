@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Article } from './entities/article.entity';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -27,12 +29,15 @@ export class ArticlesService {
     return article;
   }
 
-  create(body: any) {
+  create(createArticleDto: CreateArticleDto) {
     const newId = this.articles.length + 1;
 
     const newArticle = {
       id: newId,
-      ...body,
+      ...createArticleDto,
+      createdBy: 'Lucas',
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     this.articles.push(newArticle);
@@ -40,7 +45,7 @@ export class ArticlesService {
     return newArticle;
   }
 
-  update(id: string, body: any) {
+  update(id: string, updateArticleDto: UpdateArticleDto) {
     const articleIndex = this.articles.findIndex(
       (article) => article.id === Number(id),
     );
@@ -53,7 +58,7 @@ export class ArticlesService {
 
     this.articles[articleIndex] = {
       ...articleItem,
-      ...body,
+      ...updateArticleDto,
     };
 
     return 'atualizado com sucesso';
