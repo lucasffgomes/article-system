@@ -20,8 +20,8 @@ export class ArticlesService {
     return this.articles;
   }
 
-  findOne(id: string) {
-    const article = this.articles.find((article) => article.id === Number(id));
+  findOne(id: number) {
+    const article = this.articles.find((article) => article.id === id);
 
     if (!article)
       throw new HttpException('Esse artigo não existe', HttpStatus.NOT_FOUND);
@@ -45,9 +45,9 @@ export class ArticlesService {
     return newArticle;
   }
 
-  update(id: string, updateArticleDto: UpdateArticleDto) {
+  update(id: number, updateArticleDto: UpdateArticleDto) {
     const articleIndex = this.articles.findIndex(
-      (article) => article.id === Number(id),
+      (article) => article.id === id,
     );
 
     if (articleIndex < 0) {
@@ -64,9 +64,9 @@ export class ArticlesService {
     return 'atualizado com sucesso';
   }
 
-  delete(id: string) {
+  delete(id: number) {
     const articleIndex = this.articles.findIndex(
-      (article) => article.id === Number(id),
+      (article) => article.id === id,
     );
 
     if (articleIndex < 0) {
