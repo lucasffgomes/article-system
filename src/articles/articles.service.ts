@@ -1,82 +1,81 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Article } from './entities/article.entity';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ArticlesService {
-  private articles: Article[] = [
-    {
-      id: 1,
-      title: 'Como ficar rico',
-      content: 'Só trabalhe muito.',
-      createdBy: 'Lucas',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return this.articles;
+  async findAll() {
+    const allArticles = await this.prisma.article.findMany();
+    return allArticles;
   }
 
-  findOne(id: number) {
-    const article = this.articles.find((article) => article.id === id);
+  async findOne(id: number) {
+    const article = await this.prisma.article.findFirst({
+      where: {
+        id: id,
+      },
+    });
 
-    if (!article)
-      throw new HttpException('Esse artigo não existe', HttpStatus.NOT_FOUND);
+    if (article?.title) return article;
 
-    return article;
+    throw new HttpException('Esse artigo não existe', HttpStatus.NOT_FOUND);
   }
 
-  create(createArticleDto: CreateArticleDto) {
-    const newId = this.articles.length + 1;
-
-    const newArticle = {
-      id: newId,
-      ...createArticleDto,
-      createdBy: 'Lucas',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    this.articles.push(newArticle);
+  async create(createArticleDto: CreateArticleDto) {
+    const newArticle = await this.prisma.article.create({
+      data: {
+        title: createArticleDto.title,
+        content: createArticleDto.content,
+        createdBy: createArticleDto.createdBy,
+      },
+    });
 
     return newArticle;
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    const articleIndex = this.articles.findIndex(
-      (article) => article.id === id,
-    );
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    const findArticle = await this.prisma.article.findFirst({
+      where: {
+        id: id,
+      },
+    });
 
-    if (articleIndex < 0) {
+    if (!findArticle) {
       throw new HttpException('Esse artigo não existe', HttpStatus.NOT_FOUND);
     }
 
-    const articleItem = this.articles[articleIndex];
+    const article = await this.prisma.article.update({
+      where: {
+        id: findArticle.id,
+      },
+      data: updateArticleDto,
+    });
 
-    this.articles[articleIndex] = {
-      ...articleItem,
-      ...updateArticleDto,
-    };
-
-    return 'atualizado com sucesso';
+    return article;
   }
 
-  delete(id: number) {
-    const articleIndex = this.articles.findIndex(
-      (article) => article.id === id,
-    );
+  async delete(id: number) {
+    const findArticle = await this.prisma.article.findFirst({
+      where: {
+        id: id,
+      },
+    });
 
-    if (articleIndex < 0) {
+    if (!findArticle) {
       throw new HttpException('Esse artigo não existe', HttpStatus.NOT_FOUND);
     }
 
-    this.articles.splice(articleIndex, 1);
+    await this.prisma.article.delete({
+      where: {
+        id: findArticle.id,
+      },
+    });
 
     return {
-      message: 'Artigo excluído com sucesso',
-    };
+      message: 'Artigo excluído',
+    }
   }
 }
