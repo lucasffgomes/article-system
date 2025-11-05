@@ -4,32 +4,32 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user';
-import { UpdateUserDto } from './dto/update-user';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
-  //   constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly userService: UsersService) { }
 
   /**
    * Retorna todos os usuários.
    */
   @Get()
-  getAll() {
-    // Aqui você chamaria o service: return this.usersService.findAll();
-    return [];
+  findAllUsers() {
+    return this.userService.findAll();
   }
 
   /**
    * Retorna um usuário específico pelo ID.
    */
   @Get(':id')
-  findOneById(@Param('id') id: string) {
-    // return this.usersService.findOneById(id);
-    return id;
+  findOneUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findOne(id);
   }
 
   /**
