@@ -6,19 +6,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('article')
-export class Article {
+@Entity('user')
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
-  content: string;
+  email: string;
 
-  @Column({ name: 'createdBy' })
-  createdBy: string;
+  @Column()
+  password: string;
 
   @CreateDateColumn({ name: 'createdAt' })
   createdAt: Date;
@@ -26,3 +26,4 @@ export class Article {
   @UpdateDateColumn({ name: 'updatedAt', nullable: true })
   updatedAt: Date;
 }
+

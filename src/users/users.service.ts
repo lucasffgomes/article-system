@@ -1,20 +1,23 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
 
   async findAll() {
-    const allUsers = await this.prisma.user.findMany();
+    const allUsers = await this.userRepository.find();
     return allUsers;
   }
 
   async findOne(id: number) {
-    const user = await this.prisma.user.findFirst({
-      where: {
-        id: id,
-      },
+    const user = await this.userRepository.findOne({
+      where: { id },
     });
 
     if (user?.email) return user;
