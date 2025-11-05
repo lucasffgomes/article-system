@@ -15,6 +15,9 @@ async function bootstrap() {
       whitelist: true, // remove props enviadas no body que nao estao no DTO
     }),
   );
-  await app.listen(process.env.PORT ?? 3000);
+  
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
+  console.log(`🚀 Aplicação rodando na porta ${port}`);
 }
 bootstrap();
