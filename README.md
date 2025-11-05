@@ -22,6 +22,7 @@ Sistema de gerenciamento de artigos e usuários com autenticação JWT e control
 Article System é uma API REST desenvolvida em NestJS que permite o gerenciamento de artigos e usuários com sistema completo de autenticação e autorização baseado em JWT e controle de permissões por roles.
 
 O sistema possui três níveis de permissão:
+
 - **Admin**: Pode gerenciar artigos e usuários (CRUD completo)
 - **Editor**: Pode gerenciar artigos (CRUD completo)
 - **Reader**: Pode apenas ler artigos
@@ -125,19 +126,6 @@ npm run build
 npm run start:prod
 ```
 
-### Outros comandos úteis
-
-```bash
-# Formatar código
-npm run format
-
-# Linter
-npm run lint
-
-# Testes
-npm test
-```
-
 ## 🐳 Docker
 
 ### Executando com Docker Compose
@@ -189,6 +177,7 @@ docker run -p 3000:3000 --env-file .env article-system
 ### Autenticação
 
 #### Login
+
 ```http
 POST /auth/login
 Content-Type: application/json
@@ -200,6 +189,7 @@ Content-Type: application/json
 ```
 
 **Resposta:**
+
 ```json
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -223,6 +213,7 @@ DELETE /users/:id      # Deletar usuário
 ```
 
 **Exemplo - Criar usuário:**
+
 ```http
 POST /users
 Authorization: Bearer <token>
@@ -236,6 +227,7 @@ Content-Type: application/json
 ```
 
 **Exemplo - Atualizar usuário com permissões:**
+
 ```http
 PUT /users/:id
 Authorization: Bearer <token>
@@ -258,6 +250,7 @@ DELETE /articles/:id      # Deletar artigo (Admin, Editor)
 ```
 
 **Exemplo - Criar artigo:**
+
 ```http
 POST /articles
 Authorization: Bearer <token>
@@ -287,11 +280,11 @@ O token expira em **24 horas**.
 
 ### Níveis de Permissão
 
-| Permissão | Descrição | Ações Permitidas |
-|-----------|-----------|------------------|
-| **admin** | Administrador completo | CRUD de artigos e usuários |
-| **editor** | Editor de artigos | CRUD de artigos (apenas leitura de usuários) |
-| **reader** | Leitor | Apenas leitura de artigos |
+| Permissão  | Descrição              | Ações Permitidas                             |
+| ---------- | ---------------------- | -------------------------------------------- |
+| **admin**  | Administrador completo | CRUD de artigos e usuários                   |
+| **editor** | Editor de artigos      | CRUD de artigos (apenas leitura de usuários) |
+| **reader** | Leitor                 | Apenas leitura de artigos                    |
 
 ### Proteção de Rotas
 
@@ -350,36 +343,10 @@ curl -X PUT http://localhost:3000/users/2 \
 
 ## 🐛 Troubleshooting
 
-### Porta 3000 já está em uso
-
-No Windows:
-```bash
-netstat -ano | findstr :3000
-taskkill /PID <numero_do_pid> /F
-```
-
-No Linux/Mac:
-```bash
-lsof -ti:3000 | xargs kill -9
-```
-
-Ou altere a porta no arquivo `.env`:
-```env
-PORT=3001
-```
-
 ### Erro de banco de dados
 
 Se o banco de dados não for criado automaticamente, certifique-se de que a pasta `prisma/` existe e tem permissões de escrita.
 
-## 📄 Licença
-
-Este projeto está sob a licença UNLICENSED.
-
 ## 👨‍💻 Autor
 
 Desenvolvido por lucasffgomes.
-
----
-
-**Desenvolvido com ❤️ usando NestJS**
