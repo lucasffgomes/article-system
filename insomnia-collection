@@ -1,0 +1,204 @@
+type: collection.insomnia.rest/5.0
+name: article-system
+meta:
+  id: wrk_b0c9a0b86d8a40598ffc2d67bfb4f44f
+  created: 1762008399825
+  modified: 1762008399825
+  description: ""
+collection:
+  - name: articles
+    meta:
+      id: fld_3fdfecbc487f4c7387e6f35c439d490c
+      created: 1762008471331
+      modified: 1762055829707
+      sortKey: -1762008471531
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/articles"
+        name: get many
+        meta:
+          id: req_fb24e4a466564fecadccf8ec51f22c9f
+          created: 1762008405156
+          modified: 1762052953109
+          isPrivate: false
+          description: ""
+          sortKey: -1762008491215
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/articles/2"
+        name: get one
+        meta:
+          id: req_8393bb44309a4cb1a12818d3e91da08a
+          created: 1762008423158
+          modified: 1762054504963
+          isPrivate: false
+          description: ""
+          sortKey: -1762008491115
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/articles/1"
+        name: update
+        meta:
+          id: req_db7e10b7e28e4f61a9d1e01ff5b34324
+          created: 1762008924696
+          modified: 1762054251128
+          isPrivate: false
+          description: ""
+          sortKey: -1762008924696
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"title": "Pagando boletos..."
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/articles/2"
+        name: delete
+        meta:
+          id: req_0c7a113357c44e6793ad2284a2bdcbbe
+          created: 1762009264359
+          modified: 1762054494493
+          isPrivate: false
+          description: ""
+          sortKey: -1762009264359
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/articles"
+        name: create
+        meta:
+          id: req_5b25e01c721a49438cd18f7c8a1011fa
+          created: 1762016120693
+          modified: 1762093644739
+          isPrivate: false
+          description: ""
+          sortKey: -1762016120693
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "title": "Como o PHP paga boletos?",
+              "content": "Rodando Laravel pae",
+            	"createdBy": "Lucas"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: users
+    meta:
+      id: fld_726f6942974943348be14eed28fe5885
+      created: 1762055813482
+      modified: 1762055826479
+      sortKey: -1762008471431
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/users"
+        name: get many
+        meta:
+          id: req_47ff22583f694be6b4b76228e2cddad8
+          created: 1762055832465
+          modified: 1762055852051
+          isPrivate: false
+          description: ""
+          sortKey: -1762055832465
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/users/1"
+        name: get one
+        meta:
+          id: req_7852c1cff9314d6895f5e80da815e0cb
+          created: 1762055864088
+          modified: 1762055871868
+          isPrivate: false
+          description: ""
+          sortKey: -1762035976579
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.6.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_b40954522751c4dc27fcb97b03d6ca197e7dd068
+    created: 1762008399836
+    modified: 1762008399836
+environments:
+  name: Base Environment
+  meta:
+    id: env_b40954522751c4dc27fcb97b03d6ca197e7dd068
+    created: 1762008399829
+    modified: 1762008519002
+    isPrivate: false
+  data:
+    base_url: localhost:3000
