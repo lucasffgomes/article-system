@@ -12,8 +12,4 @@ export class CreateArticleDto {
   })
   @IsNotEmpty()
   readonly content: string;
-
-  @IsString()
-  @IsNotEmpty()
-  readonly createdBy: string;
 }

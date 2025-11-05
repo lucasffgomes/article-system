@@ -27,11 +27,11 @@ export class ArticlesService {
     throw new HttpException('Esse artigo não existe', HttpStatus.NOT_FOUND);
   }
 
-  async create(createArticleDto: CreateArticleDto) {
+  async create(createArticleDto: CreateArticleDto, userId: number) {
     const newArticle = this.articleRepository.create({
       title: createArticleDto.title,
       content: createArticleDto.content,
-      createdBy: createArticleDto.createdBy,
+      createdBy: userId.toString(),
     });
 
     return await this.articleRepository.save(newArticle);
