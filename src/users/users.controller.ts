@@ -7,19 +7,25 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
-  constructor(private readonly userService: UsersService) { }
+  constructor(private readonly userService: UsersService) {}
 
   /**
    * Retorna todos os usuários.
    */
   @Get()
+  @Roles('admin')
   findAllUsers() {
     return this.userService.findAll();
   }
@@ -28,6 +34,7 @@ export class UsersController {
    * Retorna um usuário específico pelo ID.
    */
   @Get(':id')
+  @Roles('admin')
   findOneUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.findOne(id);
   }
@@ -36,26 +43,29 @@ export class UsersController {
    * Cria um novo usuário.
    */
   @Post()
+  @Roles('admin')
   create(@Body() createUserDto: CreateUserDto) {
-    // return this.usersService.create(createUserDto);
-    return 'User criado';
+    return this.userService.create(createUserDto);
   }
 
   /**
    * Atualiza um usuário existente.
    */
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    // return this.usersService.update(id, updateUserDto);
-    return `Usuário ${id} atualizado`;
+  @Roles('admin')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.update(id, updateUserDto);
   }
 
   /**
    * Deleta um usuário.
    */
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    // return this.usersService.remove(id);
-    return `Usuário ${id} deletado`;
+  @Roles('admin')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.delete(id);
   }
 }

@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
+import { Permission } from '../../permissions/entities/permission.entity';
 
 @Entity('user')
 export class User {
@@ -14,11 +16,14 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
+
+  @ManyToMany(() => Permission, (permission) => permission.users)
+  permissions: Permission[];
 
   @CreateDateColumn({ name: 'createdAt' })
   createdAt: Date;
@@ -26,4 +31,3 @@ export class User {
   @UpdateDateColumn({ name: 'updatedAt', nullable: true })
   updatedAt: Date;
 }
-
