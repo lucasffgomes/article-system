@@ -12,7 +12,7 @@ Sistema de gerenciamento de artigos e usuários com autenticação JWT e control
 - [Configuração](#configuração)
 - [Executando o Projeto](#executando-o-projeto)
 - [Docker](#docker)
-- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Testando com Insomnia](#-testando-com-insomnia)
 - [API Endpoints](#api-endpoints)
 - [Autenticação](#autenticação)
 - [Permissões](#permissões)
@@ -171,6 +171,40 @@ docker build -t article-system .
 # Executar container
 docker run -p 3000:3000 --env-file .env article-system
 ```
+
+## 🧪 Testando com Insomnia
+
+Este projeto inclui uma coleção completa do Insomnia para facilitar os testes da API.
+
+### Como importar a coleção
+
+1. Abra o **Insomnia** (ou instale em [insomnia.rest](https://insomnia.rest/))
+
+2. Clique em **Application** → **Preferences** → **Data** → **Import Data**
+
+3. Selecione **From File** e escolha o arquivo `insomnia-collection` da raiz do projeto
+
+4. Ou arraste e solte o arquivo `insomnia-collection` diretamente no Insomnia
+
+### Configurando variáveis de ambiente
+
+Após importar a coleção, configure as variáveis de ambiente no Insomnia:
+
+1. Clique em **Manage Environments** (no canto superior direito)
+
+2. Configure as seguintes variáveis:
+   - `base_url`: `http://localhost:3000`
+   - `token`: (será preenchido automaticamente após fazer login)
+
+### Usando a coleção
+
+A coleção inclui todas as rotas da API organizadas por categorias:
+
+- **Auth**: Login e autenticação
+- **Articles**: CRUD completo de artigos
+- **Users**: CRUD completo de usuários
+
+**Dica**: Primeiro execute a requisição de login (`Auth → Login`) para obter o token. O token será automaticamente salvo na variável `token` e usado nas demais requisições.
 
 ## 🔌 API Endpoints
 
